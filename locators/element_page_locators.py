@@ -4,9 +4,9 @@ from selenium.webdriver.common.by import By
 class MainPageLocators:
 
         """MainPage"""
-        CLOSE_MODAL = (By.CSS_SELECTOR, '[class="modal-welcome__close  modal_close  close-btn"]')
+        CLOSE_MODAL = (By.CSS_SELECTOR, '[class="modal-welcome__close  modal_close  close-btn"]')#закрытие модального окна
         BUTTON_YES_CITY = (By.XPATH,'/html/body/header/div/div[3]/div/div/div[1]/div[2]/div[2]/a[1]')#Подтвердить город
-        CLOSE_MODAL_COOKIE = (By.CSS_SELECTOR,'[class="n-cookie-modal__close"]')
+        CLOSE_MODAL_COOKIE = (By.CSS_SELECTOR,'[class="n-cookie-modal__close"]')#закрытие модального окна куки
         CATALOG_ELEMENTS = (By.CSS_SELECTOR,'[class="burger__wrapper"]>ul[class="burger__menu"]>li[class="burger__menu-item"]>[class="burger__menu-link"]')
 
         BUTTON_LOG_IN = (By.CSS_SELECTOR,'button[class="header__icons-item  header__icons-auth  auth_open"]')#не авторизован
@@ -21,13 +21,13 @@ class MainPageLocators:
         TEXT_SELECT_CITY = (By.CSS_SELECTOR,'[class="d-none  d-lg-inline"]>[class="select-city"]>[class="select-city__wrapper"]>a')#Выбранный город в хедере
 
         """Authorization"""
-        EMAIL_FIELD = (By.ID,'id_username')
-        PASSWORD_FIELD = (By.ID,'id_password')
-        BUTTON_SIGN_IN = (By.CSS_SELECTOR, '[class*="modal-login__btn  btn  btn-login"]')
-        TEXT_ERROR_AUTH = (By.CSS_SELECTOR,'[class="errorlist nonfield"]')
-        LINK_GO_TO_POLICY = (By.CSS_SELECTOR,'[class="modal-login__btn-box"]>[class="modal-login__policy  policy_links"]>[class="modal-login__policy-link"]')
-        PAGE_POLICY = (By.CSS_SELECTOR,'[class="page__title"]')
-        BUTTON_FORGOT_PASSWORD = (By.CSS_SELECTOR,'[class="modal-login__link-recover"]')
+        EMAIL_FIELD = (By.ID,'id_username')#поле email
+        PASSWORD_FIELD = (By.ID,'id_password')#поле пароль
+        BUTTON_SIGN_IN = (By.CSS_SELECTOR, '[class*="modal-login__btn  btn  btn-login"]')#кнопка войти
+        TEXT_ERROR_AUTH = (By.CSS_SELECTOR,'[class="errorlist nonfield"]')#текст ошибки авторизации
+        LINK_GO_TO_POLICY = (By.CSS_SELECTOR,'[class="modal-login__btn-box"]>[class="modal-login__policy  policy_links"]>[class="modal-login__policy-link"]')#ссылка переход на страницу политика и конфиденциальность
+        PAGE_POLICY = (By.CSS_SELECTOR,'[class="page__title"]')#текст заголовка на странице политика и конфиденциальность
+        BUTTON_FORGOT_PASSWORD = (By.CSS_SELECTOR,'[class="modal-login__link-recover"]')#кнопка забыли пароль
         FIELD_EMAIL_RESTORE_PASSWORD = (By.CSS_SELECTOR,'[class="modal-login__col  modal-login__col_recover active"]>[class="custom_form-group last-group"]>[class="custom_input"]')
         BUTTON_RESTORE = (By.CSS_SELECTOR, '[class="modal-login__btn  btn"]')
         TEXT_PASSWORD_RECOVERY = (By.ID,'[class="modal-login__col  modal-login__col_recover active"]')

@@ -47,7 +47,8 @@ class MainPage(BasePage):
             catalog_elem = self.elements_are_visibile(MainPageLocators.CATALOG_ELEMENTS)
             print(catalog_elem[1])
             self.click_element(catalog_elem[indx])
-            time.sleep(5)
+            self.driver.execute_script("window.scrollBy(0, 1000);")
+            time.sleep(4)
             self.driver.back()
             self.click_element(MainPageLocators.BUTTON_BURGER)
 

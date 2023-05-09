@@ -129,7 +129,7 @@ class TestElements:
 
     """Smoke test"""
     class TestSmoke:
-        def test_smoke_test(self,driver):
+        def test_smoke_test(self,driver):#Смоук тест
             page = SmokeTest(driver, "https://namelazz.com/")
             page.open()
             page.button_yes_choose_city()
@@ -166,7 +166,7 @@ class TestElements:
 
     """Main Page"""
     class TestMainPage:
-        def test_subscription(self, driver):
+        def test_subscription(self, driver):#подписка на новости
             page = MainPage(driver, "https://namelazz.com/")
             page.open()
             page.button_yes_choose_city()
@@ -177,7 +177,7 @@ class TestElements:
             assert subscription == 'СПАСИБО ЗА ПОДПИСКУ! ПОДТВЕРЖДЕНИЕ ОТПРАВЛЕНО ВАМ НА ПОЧТУ.', f"Текст {subscription} не совпадает с 'СПАСИБО ЗА ПОДПИСКУ! ПОДТВЕРЖДЕНИЕ ОТПРАВЛЕНО ВАМ НА ПОЧТУ'"
             time.sleep(5)
 
-        def test_choose_city(self,driver):
+        def test_choose_city(self,driver):#выбор города
             page = MainPage(driver, "https://namelazz.com/")
             page.open()
             page.button_yes_choose_city()
@@ -188,7 +188,7 @@ class TestElements:
             header_city = page.text_city()
             assert city == header_city, f"Выбранный город {city} отличсется от города в хедере {header_city}"
 
-        def test_catalog_choose_and_back(self, driver):
+        def test_catalog_choose_and_back(self, driver):#переключение между каталогами
             page = SmokeTest(driver, "https://namelazz.com/")
             page.open()
             page.button_yes_choose_city()
