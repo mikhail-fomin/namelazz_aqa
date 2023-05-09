@@ -7,6 +7,7 @@ class MainPageLocators:
         CLOSE_MODAL = (By.CSS_SELECTOR, '[class="modal-welcome__close  modal_close  close-btn"]')
         BUTTON_YES_CITY = (By.XPATH,'/html/body/header/div/div[3]/div/div/div[1]/div[2]/div[2]/a[1]')#Подтвердить город
         CLOSE_MODAL_COOKIE = (By.CSS_SELECTOR,'[class="n-cookie-modal__close"]')
+        CATALOG_ELEMENTS = (By.CSS_SELECTOR,'[class="burger__wrapper"]>ul[class="burger__menu"]>li[class="burger__menu-item"]>[class="burger__menu-link"]')
 
         BUTTON_LOG_IN = (By.CSS_SELECTOR,'button[class="header__icons-item  header__icons-auth  auth_open"]')#не авторизован
         BUTTON_LOG_IN_WHEN_AUTH_USER = (By.CSS_SELECTOR,'[class="header__icons-item  header__icons-auth"]')#авторизован

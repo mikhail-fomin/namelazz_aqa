@@ -36,6 +36,7 @@ class BasePage:
         time.sleep(4)
         element.send_keys(Keys.ENTER)
 
+
     def input_text_keys_enter(self, locator, text):
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
         self.driver.execute_script("arguments[0].scrollIntoView();", element)

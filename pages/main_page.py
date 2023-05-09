@@ -4,7 +4,8 @@ from random import randint, randrange
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
-
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 
 from .base_page import BasePage
 from locators.element_page_locators import MainPageLocators
@@ -40,6 +41,15 @@ class MainPage(BasePage):
     def text_city(self):
         city = self.element_is_visibile(MainPageLocators.TEXT_SELECT_CITY)
         return city.text
+
+    def catalog_click_back(self):
+        for indx in range(4):
+            catalog_elem = self.elements_are_visibile(MainPageLocators.CATALOG_ELEMENTS)
+            print(catalog_elem[1])
+            self.click_element(catalog_elem[indx])
+            time.sleep(5)
+            self.driver.back()
+            self.click_element(MainPageLocators.BUTTON_BURGER)
 
 
 """Авторизация"""
@@ -118,15 +128,20 @@ class Registration(MainPage):
 class SmokeTest(MainPage):
 
     """Бургер меню"""
+    def burger_click(self):
+        self.click_element(MainPageLocators.BUTTON_BURGER)
     def burger_menu(self):
         self.click_element(MainPageLocators.BUTTON_BURGER)
         self.click_element(MainPageLocators.BUTTON_CLOTHES)
         self.click_element(MainPageLocators.BUTTON_LOOK_ALL)
     """Каталог"""
+
     def catalog(self):
         cards_product = self.elements_any_are_visibile(MainPageLocators.CARD_PRODUCT)
         self.click_element(cards_product[randint(0, 10)])
         print(f"Кол-во видимых элементов:{len(cards_product)}")
+
+
 
     """Страница продукта"""
     def choose_size(self):

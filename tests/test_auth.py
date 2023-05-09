@@ -188,3 +188,12 @@ class TestElements:
             header_city = page.text_city()
             assert city == header_city, f"Выбранный город {city} отличсется от города в хедере {header_city}"
 
+        def test_catalog_choose_and_back(self, driver):
+            page = SmokeTest(driver, "https://namelazz.com/")
+            page.open()
+            page.button_yes_choose_city()
+            time.sleep(5)
+            page.close_modal_cookie()
+            page.burger_click()
+            page.catalog_click_back()
+
