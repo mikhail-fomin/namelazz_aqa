@@ -45,7 +45,6 @@ class MainPage(BasePage):
     def catalog_click_back(self):
         for indx in range(4):
             catalog_elem = self.elements_are_visibile(MainPageLocators.CATALOG_ELEMENTS)
-            print(catalog_elem[1])
             self.click_element(catalog_elem[indx])
             self.driver.execute_script("window.scrollBy(0, 1000);")
             time.sleep(4)
