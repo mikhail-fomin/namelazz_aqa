@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from .base_page import BasePage
 from locators.element_page_locators import MainPageLocators
 
-
+"""Главная страница"""
 class MainPage(BasePage):
     def button_yes_choose_city(self):
         self.click_element2(MainPageLocators.BUTTON_YES_CITY)
@@ -22,6 +22,25 @@ class MainPage(BasePage):
 
     def log_in(self):
         self.click_element(MainPageLocators.BUTTON_LOG_IN)
+
+    def subscription(self, email):
+        self.input_text_keys_enter(MainPageLocators.SUBSCRIPTION, email)
+        self.element_is_visibile(MainPageLocators.TEXT_SUBSCRIPTION)
+
+    def text_subscription(self):
+        subscription = self.element_is_visibile(MainPageLocators.TEXT_SUBSCRIPTION)
+        return subscription.text
+
+    def choose_city(self, city):
+        self.click_element_without_scroll(MainPageLocators.CHOOSE_CITY)
+        time.sleep(3)
+        self.input_text_keys_enter_time_sleep_4(MainPageLocators.FIELD_INPUT_CITY, city)
+
+
+    def text_city(self):
+        city = self.element_is_visibile(MainPageLocators.TEXT_SELECT_CITY)
+        return city.text
+
 
 """Авторизация"""
 class Authorization(MainPage):
@@ -40,6 +59,32 @@ class Authorization(MainPage):
     def text_error_auth(self):
         text_error = self.is_element_present(MainPageLocators.TEXT_ERROR_AUTH)
         return text_error.text
+
+    def click_policy(self):
+        click_policy = self.click_element(MainPageLocators.LINK_GO_TO_POLICY)
+
+    def page_policy(self):
+        page_policy = self.element_is_visibile(MainPageLocators.PAGE_POLICY)
+        return page_policy.text
+
+    def click_forgot_password(self):
+        self.click_element(MainPageLocators.BUTTON_FORGOT_PASSWORD)
+
+    def restore_password(self,email):
+        self.input_text(MainPageLocators.FIELD_EMAIL_RESTORE_PASSWORD,email)
+        self.click_element(MainPageLocators.BUTTON_RESTORE)
+
+    def restore_text(self):
+        text_password_recovery = self.is_element_present(MainPageLocators.TEXT_PASSWORD_RECOVERY)
+        return text_password_recovery.text
+
+
+    def text_restore(self):
+        text_rest = self.element_is_visibile(MainPageLocators.TEXT_PASSWORD_RECOVERY)
+        return text_rest.text()
+    def restore_error_text(self):
+        text_error_password_recovery = self.element_is_visibile(MainPageLocators.TEXT_ERROR_PASSWORD_RECOVERY)
+        return text_error_password_recovery.text
 
 """Регистрация"""
 class Registration(MainPage):
@@ -60,6 +105,14 @@ class Registration(MainPage):
         self.click_element(MainPageLocators.BUTTON_CONFIRM_LOYALTY)
     def button_create_account(self):
         self.click_element(MainPageLocators.BUTTON_CREATE_ACCOUNT)
+
+    def text_error_mail(self):
+        error_mail_text = self.is_element_present(MainPageLocators.TEXT_ERROR_MAIL)
+        return error_mail_text.text
+
+    def text_successful_reg(self):
+        text_succ_reg = self.element_is_visibile(MainPageLocators.TEXT_SUCCESSFUL_REGISTRATION)
+        return text_succ_reg.text
 
 """Смоук тест"""
 class SmokeTest(MainPage):
@@ -112,7 +165,7 @@ class SmokeTest(MainPage):
         size_checkot = self.element_is_visibile(MainPageLocators.SIZE_PRODUCT_CHECHOUT)
         return name_product_checkout.text, price_checkout.text,color_checkout.get_attribute("title"),size_checkot.text.replace('Размер\n', '').upper()
 
-    def data_filling(self, country, city, index, street, house, apartment,name, first_name, email, number, comment):
+    def data_filling(self, country, city, index, street, house, apartment,name, first_name, email, number, comment):#заполняем поля
         time.sleep(3)
         fill_country = self.input_text(MainPageLocators.COUNTRY, country)
         time.sleep(3)
@@ -120,7 +173,7 @@ class SmokeTest(MainPage):
         time.sleep(3)
         fill_index = self.input_text(MainPageLocators.INDEX, index)
         fill_street = self.input_text(MainPageLocators.STREET, street)
-        time.sleep(2)
+        time.sleep(3)
         fill_house = self.input_text(MainPageLocators.HOUSE, house)
         fill_apartment = self.input_text(MainPageLocators.APARTMENT, apartment)
         fill_name = self.input_text(MainPageLocators.NAME_ORDER, name)
@@ -129,21 +182,38 @@ class SmokeTest(MainPage):
         fill_number = self.input_text(MainPageLocators.NUMBER_ORDER, number)
         fill_comment = self.input_text(MainPageLocators.COMMENT_ORDER, comment)
 
-    def radiobutton_choose_delivery(self):
+    def radiobutton_choose_delivery(self):#выбираем тип доставки
         radiobutton = self.click_element(MainPageLocators.RADIOBUTTON_ORDER)
 
-    def radiobutton_delivety_cost(self):
+    def radiobutton_delivety_cost(self):#текст цены доставки
         radiobutton_delivety_cost = self.element_is_visibile(MainPageLocators.RADIOBUTTON_DELIVERY_COST)
         return radiobutton_delivety_cost.text
 
-    def price_checkout(self):
+    def price_checkout(self):#получаем текст цены продукта на странице оформления заказа в списке товаров
         price_checkout = self.element_is_visibile(MainPageLocators.PRICE_PRODUCT_CHECKOUT)
-        return price_checkout.text.replace('RUB', '')
+        return price_checkout.text.replace(' RUB', '')
 
-    def information_about_order(self):
+    def information_about_order(self):#Получаем текст стоимости товара в информации о заказе
         cost_of_goods = self.element_is_visibile(MainPageLocators.COST_OF_GOODS)
         return cost_of_goods.text
 
-    def delivery_cost_in_information_about_order(self):
+    def delivery_cost_in_information_about_order(self):#Получаем текст стоимость доставки в информации о заказе
         delivery_cost_information_order = self.element_is_visibile(MainPageLocators.DELIVERY)
         return delivery_cost_information_order.text
+
+    def total_sum(self):#Получаем текст итоговой суммы к оплате
+        total_sum = self.element_is_visibile(MainPageLocators.TOTAL_SUM)
+        return total_sum.text
+
+    def button_submit(self):
+        self.click_element(MainPageLocators.BUTTON_ORDER_SUBMIT)
+
+    def total_ykassa(self):
+        ykassa_total = self.element_is_visibile(MainPageLocators.TOTAL_SUM_Y_KASSA)
+        return ykassa_total.get_attribute('aria-label')
+
+
+
+
+
+

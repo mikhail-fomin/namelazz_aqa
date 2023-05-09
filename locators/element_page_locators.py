@@ -10,16 +10,27 @@ class MainPageLocators:
 
         BUTTON_LOG_IN = (By.CSS_SELECTOR,'button[class="header__icons-item  header__icons-auth  auth_open"]')#не авторизован
         BUTTON_LOG_IN_WHEN_AUTH_USER = (By.CSS_SELECTOR,'[class="header__icons-item  header__icons-auth"]')#авторизован
-        BUTTON_BURGER = (By.CSS_SELECTOR, "[class='header__btn  menu-btn-open']")
-        BUTTON_CLOTHES = (By.CSS_SELECTOR, 'div.burger__wrapper > ul.burger__menu:nth-of-type(1) > li:nth-of-type(5)>[class="burger__menu-link  submenu-open"]')
-        BUTTON_LOOK_ALL = (By.CSS_SELECTOR, 'div.burger__submenu:nth-of-type(1)>ul.burger__menu:nth-of-type(1)>li:nth-of-type(2)>[class="burger__menu-link"]:nth-of-type(1)')
-
+        BUTTON_BURGER = (By.CSS_SELECTOR, "[class='header__btn  menu-btn-open']")#кнопка бургер меню
+        BUTTON_CLOTHES = (By.CSS_SELECTOR, 'div.burger__wrapper > ul.burger__menu:nth-of-type(1) > li:nth-of-type(5)>[class="burger__menu-link  submenu-open"]')#Одежда и аксесуары
+        BUTTON_LOOK_ALL = (By.CSS_SELECTOR, 'div.burger__submenu:nth-of-type(1)>ul.burger__menu:nth-of-type(1)>li:nth-of-type(2)>[class="burger__menu-link"]:nth-of-type(1)')#Смотреть всё
+        SUBSCRIPTION = (By.ID,"sbscr")#поле подписаться на новости
+        TEXT_SUBSCRIPTION = (By.CSS_SELECTOR,'[class="container-fluid"]>h1')#текст успешной подписки на новости
+        CHOOSE_CITY = (By.CSS_SELECTOR,'[class="d-none  d-lg-inline"]>[class="select-city"]')#выбор города
+        FIELD_INPUT_CITY = (By.CSS_SELECTOR,'[class="select-city__cities fancybox-content"]>[class="select-city__cities-input suggestions-input"]')#поле ввести город
+        TEXT_SELECT_CITY = (By.CSS_SELECTOR,'[class="d-none  d-lg-inline"]>[class="select-city"]>[class="select-city__wrapper"]>a')#Выбранный город в хедере
 
         """Authorization"""
         EMAIL_FIELD = (By.ID,'id_username')
         PASSWORD_FIELD = (By.ID,'id_password')
         BUTTON_SIGN_IN = (By.CSS_SELECTOR, '[class*="modal-login__btn  btn  btn-login"]')
         TEXT_ERROR_AUTH = (By.CSS_SELECTOR,'[class="errorlist nonfield"]')
+        LINK_GO_TO_POLICY = (By.CSS_SELECTOR,'[class="modal-login__btn-box"]>[class="modal-login__policy  policy_links"]>[class="modal-login__policy-link"]')
+        PAGE_POLICY = (By.CSS_SELECTOR,'[class="page__title"]')
+        BUTTON_FORGOT_PASSWORD = (By.CSS_SELECTOR,'[class="modal-login__link-recover"]')
+        FIELD_EMAIL_RESTORE_PASSWORD = (By.CSS_SELECTOR,'[class="modal-login__col  modal-login__col_recover active"]>[class="custom_form-group last-group"]>[class="custom_input"]')
+        BUTTON_RESTORE = (By.CSS_SELECTOR, '[class="modal-login__btn  btn"]')
+        TEXT_PASSWORD_RECOVERY = (By.ID,'[class="modal-login__col  modal-login__col_recover active"]')
+        TEXT_ERROR_PASSWORD_RECOVERY = (By.CSS_SELECTOR,'[id="id-error-recover-password"]')
 
         """Registration"""
         BUTTON_GO_TO_REGISTRATION = (By.CSS_SELECTOR, '[class="modal-login__link-box"]')
@@ -32,7 +43,9 @@ class MainPageLocators:
         CHECKBOX_SIG_IN_LOYALTY = (By.ID,"is_sign_loyalty") #чекбокс лояльность
         ENTER_NUMBER = (By.ID,"loyalty-phone")#поле номера для лояльности
         BUTTON_CONFIRM_LOYALTY = (By.ID, "loyalty-phone-confirm")#кнопка подтвержденя лояльности
-        BUTTON_CREATE_ACCOUNT = (By.CSS_SELECTOR,'[class="modal-login__btn  btn  btn-registration"]')
+        BUTTON_CREATE_ACCOUNT = (By.CSS_SELECTOR,'[class="modal-login__btn  btn  btn-registration"]')#кнопка создать аккаунт
+        TEXT_ERROR_MAIL = (By.CSS_SELECTOR,'[class="error error-messages-registration message-top"]')#текст ошибки пользователь с такой ошибкой существует
+        TEXT_SUCCESSFUL_REGISTRATION = (By.CSS_SELECTOR,'[class="modal-login__col active"]>[method="post"]')
 
 
         """Personal Profile"""
@@ -86,7 +99,12 @@ class MainPageLocators:
         RADIOBUTTON_DELIVERY_COST = (By.CSS_SELECTOR,'[id="cdekCoruier"]>[class="delivery input-parent courier"]>[class="delivery-details"]>[class="delivery_cost"]')
 
         #Информация о заказе
-        COST_OF_GOODS = (By.CSS_SELECTOR,'[class="real_total_cost"]')
-        DISCOUNT = (By.CSS_SELECTOR,'[class="ms2_promocode_discount"]')
+        COST_OF_GOODS = (By.CSS_SELECTOR,'[class="real_total_cost"]')#стоимость товара
+        DISCOUNT = (By.CSS_SELECTOR,'[class="ms2_promocode_discount"]')#стоимость доставки
         DELIVERY = (By.CSS_SELECTOR, '[class="ms2_delivery_cost"]') #стоимость с RUB
         TOTAL_PAYABLE = (By.CSS_SELECTOR,'[id="ms2_order_cost"]')#стоимость c RUB
+        TOTAL_SUM = (By.CSS_SELECTOR, '[id="ms2_order_cost"]')#итого к оплате
+        BUTTON_ORDER_SUBMIT = (By.ID,"order_submit")#кнопка сделать заказ
+
+        #Страница платёжной системы
+        TOTAL_SUM_Y_KASSA = (By.CSS_SELECTOR,'[class="Text__StyledTextSpan-sc-9bqqn7-0 bKjqYI Price__StyledText-sc-ymfuk6-0 jiVPLn"]>span')#стоимость товара на странице юкассы
