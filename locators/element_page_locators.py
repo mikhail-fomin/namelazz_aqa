@@ -7,11 +7,12 @@ class MainPageLocators:
         CLOSE_MODAL = (By.CSS_SELECTOR, '[class="modal-welcome__close  modal_close  close-btn"]')#закрытие модального окна
         BUTTON_YES_CITY = (By.XPATH,'/html/body/header/div/div[3]/div/div/div[1]/div[2]/div[2]/a[1]')#Подтвердить город
         CLOSE_MODAL_COOKIE = (By.CSS_SELECTOR,'[class="n-cookie-modal__close"]')#закрытие модального окна куки
-        CATALOG_ELEMENTS = (By.CSS_SELECTOR,'[class="burger__wrapper"]>ul[class="burger__menu"]>li[class="burger__menu-item"]>[class="burger__menu-link"]')
+        CATALOG_ELEMENTS = (By.CSS_SELECTOR,'[class="burger__wrapper"]>ul[class="burger__menu"]>li[class="burger__menu-item"]>[class="burger__menu-link"]')#Список категорий в сайдбаре
 
         BUTTON_LOG_IN = (By.CSS_SELECTOR,'button[class="header__icons-item  header__icons-auth  auth_open"]')#не авторизован
         BUTTON_LOG_IN_WHEN_AUTH_USER = (By.CSS_SELECTOR,'[class="header__icons-item  header__icons-auth"]')#авторизован
         BUTTON_BURGER = (By.CSS_SELECTOR, "[class='header__btn  menu-btn-open']")#кнопка бургер меню
+        BUTTON_BASKET = (By.CSS_SELECTOR,'[id="ajaxCart2"]>svg')#кнопка корзина
         BUTTON_CLOTHES = (By.CSS_SELECTOR, 'div.burger__wrapper > ul.burger__menu:nth-of-type(1) > li:nth-of-type(5)>[class="burger__menu-link  submenu-open"]')#Одежда и аксесуары
         BUTTON_LOOK_ALL = (By.CSS_SELECTOR, 'div.burger__submenu:nth-of-type(1)>ul.burger__menu:nth-of-type(1)>li:nth-of-type(2)>[class="burger__menu-link"]:nth-of-type(1)')#Смотреть всё
         SUBSCRIPTION = (By.ID,"sbscr")#поле подписаться на новости
@@ -19,6 +20,9 @@ class MainPageLocators:
         CHOOSE_CITY = (By.CSS_SELECTOR,'[class="d-none  d-lg-inline"]>[class="select-city"]')#выбор города
         FIELD_INPUT_CITY = (By.CSS_SELECTOR,'[class="select-city__cities fancybox-content"]>[class="select-city__cities-input suggestions-input"]')#поле ввести город
         TEXT_SELECT_CITY = (By.CSS_SELECTOR,'[class="d-none  d-lg-inline"]>[class="select-city"]>[class="select-city__wrapper"]>a')#Выбранный город в хедере
+        FAVORITES = (By.CSS_SELECTOR, '[class="header__icons-item  header__icons-fav  d-none  d-lg-inline"]>svg')  # кнопка избранное
+        DELETE_FROM_FAVORITES = (By.CSS_SELECTOR,'[class="like-good-favorites"]')#кнопка удалить из избранного
+        FOOTER = (By.CSS_SELECTOR,'[class="footer__bottom"]')#футер страницы
 
         """Authorization"""
         EMAIL_FIELD = (By.ID,'id_username')#поле email
@@ -43,7 +47,7 @@ class MainPageLocators:
         PASSWORD_REGISTRATION_FIELD2 = (By.ID, "password2")
         CHECKBOX_SIG_IN_LOYALTY = (By.ID,"is_sign_loyalty") #чекбокс лояльность
         ENTER_NUMBER = (By.ID,"loyalty-phone")#поле номера для лояльности
-        BUTTON_CONFIRM_LOYALTY = (By.ID, "loyalty-phone-confirm")#кнопка подтвержденя лояльности
+        BUTTON_CONFIRM_LOYALTY = (By.ID, "loyalty-phone-confirm")#кнопка подтверждения лояльности
         BUTTON_CREATE_ACCOUNT = (By.CSS_SELECTOR,'[class="modal-login__btn  btn  btn-registration"]')#кнопка создать аккаунт
         TEXT_ERROR_MAIL = (By.CSS_SELECTOR,'[class="error error-messages-registration message-top"]')#текст ошибки пользователь с такой ошибкой существует
         TEXT_SUCCESSFUL_REGISTRATION = (By.CSS_SELECTOR,'[class="modal-login__col active"]>[method="post"]')
@@ -54,7 +58,9 @@ class MainPageLocators:
 
         """Catalog page"""
         CARD_PRODUCT = (By.CSS_SELECTOR, '[class="like-good-img1 img-height-box"]')  #карточка товара
-
+        ADD_FAVORITES = (By.CSS_SELECTOR, '[class="n-product__fixed-add"]>[class="d-none  d-lg-flex  n-product__add-favorites msfavorites "]>[fill="none"]>[fill-rule="evenodd"]') #кнопка добавить в избранное
+        ACTIVE_BUTTON_ADD_FAVORITES = (By.CSS_SELECTOR,'[class="d-none  d-lg-flex  n-product__add-favorites msfavorites load voted "]>svg')#активная кнопка добавить в избранное
+        NAME_PRODUCT_CATALOG = (By.CSS_SELECTOR, '[class="like-good-name"]>a')#название продукта на странице каталога
 
         """Product page"""
         CHOOSE_SIZE = (By.CSS_SELECTOR, '[class="size-item "]')  # выбрать размер
@@ -67,12 +73,14 @@ class MainPageLocators:
 
 
         """Basket page"""
-        NAME_PRODUCT_BASKET = (By.CSS_SELECTOR, '[class="cart_title"]')  # получаем текст название товара в корзине
+        NAME_PRODUCT_BASKET = (By.CSS_SELECTOR, '[class="cart-details-col"]>a')#[class="cart_title"]  # получаем текст название товара в корзине
         PRICE_PRODUCT_BASKET = (By.CSS_SELECTOR, '[class="cart_price"]') #получаем текс цена товара в корзине
         SIZE_PRODUCT_BASKET = (By.CSS_SELECTOR,'[class="cart_option"]:nth-of-type(2)')#получаем текст размера товара в корзине
         COLOR_PRODUCT_BASKET = (By.XPATH,"//div[contains(@class, 'cart_option')]/div/div[contains(@title, '')]")#получаем текст цвета товара в корзине
-        BUTTON_CHECKOUT =  (By.CSS_SELECTOR,'[class="ajax-cart-buttons"]>[class="btn"]')#Кнопка оформить заказ
-
+        SUM_PRICE_BASKET = (By.CSS_SELECTOR,'[class="ms2_total_cost"]')#получаем текст стоимости товаров ИТОГО
+        BUTTON_CHECKOUT = (By.CSS_SELECTOR,'[class="ajax-cart-buttons"]>[class="btn"]')#Кнопка оформить заказ
+        BUTTON_DELETE_PRODUCT_FROM_BASKET = (By.CSS_SELECTOR,'[class="cart_cancel"]>div')#кнопка удалить из корзины товар
+        TEXT_EMPTY_BASKET = (By.CSS_SELECTOR, '[class="empty_cart-title"]')#текст пустой корзины
         """Checkout page"""
         NAME_PRODUCT_CHECKOUT = (By.CSS_SELECTOR,'[class="cart_title"]')#получаем текст название продукта на странице оформления заказа
         PRICE_PRODUCT_CHECKOUT = (By.CSS_SELECTOR,'[class="cart_price"]')#получаем текст цены продукта на странице оформления заказа

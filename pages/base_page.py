@@ -63,14 +63,17 @@ class BasePage:
         element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
         return element.text
 
-    def element_is_visibile(self,locator, timeout=5):
+    def element_is_visibile(self,locator, timeout=15):
         return WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located(locator))
 
-    def elements_are_visibile(self,locator, timeout=5):
+    def elements_are_visibile(self,locator, timeout=15):
         return WebDriverWait(self.driver,timeout).until(EC.visibility_of_all_elements_located(locator))
 
     def elements_any_are_visibile(self, locator, timeout = 10):
         return WebDriverWait(self.driver, timeout).until(EC.visibility_of_any_elements_located(locator))
+
+
+
 
 
 

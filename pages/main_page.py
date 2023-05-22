@@ -1,6 +1,7 @@
+import random
 import time
-from random import randint, randrange
-
+from random import randint, randrange,random
+import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
@@ -12,37 +13,47 @@ from locators.element_page_locators import MainPageLocators
 
 """Главная страница"""
 class MainPage(BasePage):
-    def button_yes_choose_city(self):
-        self.click_element2(MainPageLocators.BUTTON_YES_CITY)
 
+    # Кнопка подтвердить город
+    def button_yes_choose_city(self):
+        self.click_element(MainPageLocators.BUTTON_YES_CITY)
+
+    # Закрыть модальное окно регистрации
     def close_modal_window(self):
         self.click_element(MainPageLocators.CLOSE_MODAL)
 
+    # Закрыть модалку куки
     def close_modal_cookie(self):
         self.click_element(MainPageLocators.CLOSE_MODAL_COOKIE)
 
+    # Кнопка войти
     def log_in(self):
         self.click_element(MainPageLocators.BUTTON_LOG_IN)
 
-    def subscription(self, email):
+    def fill_auth_fields_valid(self,email, password): #Заполнение полей авторизации и нажатие кнопки войти
+        self.input_text(MainPageLocators.EMAIL_FIELD, email)
+        self.input_text(MainPageLocators.PASSWORD_FIELD, password)
+        self.click_element(MainPageLocators.BUTTON_SIGN_IN)
+
+    def subscription(self, email):#Подписаться на новости
         self.input_text_keys_enter(MainPageLocators.SUBSCRIPTION, email)
         self.element_is_visibile(MainPageLocators.TEXT_SUBSCRIPTION)
 
-    def text_subscription(self):
+    def text_subscription(self):#Текст успешной подписки на новости
         subscription = self.element_is_visibile(MainPageLocators.TEXT_SUBSCRIPTION)
         return subscription.text
 
-    def choose_city(self, city):
+    def choose_city(self, city):#Выбор города
         self.click_element_without_scroll(MainPageLocators.CHOOSE_CITY)
         time.sleep(3)
         self.input_text_keys_enter_time_sleep_4(MainPageLocators.FIELD_INPUT_CITY, city)
 
 
-    def text_city(self):
+    def text_city(self):#Текст выбранный город
         city = self.element_is_visibile(MainPageLocators.TEXT_SELECT_CITY)
         return city.text
 
-    def catalog_click_back(self):
+    def catalog_click_back(self):#Переключение между категориями в сайдбаре
         for indx in range(4):
             catalog_elem = self.elements_are_visibile(MainPageLocators.CATALOG_ELEMENTS)
             self.click_element(catalog_elem[indx])
@@ -50,6 +61,71 @@ class MainPage(BasePage):
             time.sleep(4)
             self.driver.back()
             self.click_element(MainPageLocators.BUTTON_BURGER)
+
+    def catalog_add_favourites(self):#Добавление в избранное нескольких товаров
+        for indx in range(3):
+            catalog_elem = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
+            self.click_element(catalog_elem[indx])
+            time.sleep(3)
+            self.click_element_without_scroll(MainPageLocators.ADD_FAVORITES)
+            time.sleep(3)
+            self.driver.back()
+
+    def catalog_add_favourites_20_products(self):#Добавление в избранное 20 товаров
+
+        amount_cards = 0
+        for indx in range(10):
+            catalog_elem = self.element_are_present(MainPageLocators.CARD_PRODUCT)
+            time.sleep(2)
+            self.driver.execute_script("window.scrollBy(0, 7000);")
+            time.sleep(3)
+            self.click_element(catalog_elem[indx])
+            amount_cards = amount_cards + 1
+            time.sleep(3)
+            self.click_element_without_scroll(MainPageLocators.ADD_FAVORITES)
+            time.sleep(3)
+            self.driver.back()
+        self.click_element(MainPageLocators.FAVORITES)
+        #footer = self.driver.find_element(MainPageLocators.FOOTER)
+        #self.driver.execute_script("arguments[0].scrollIntoView();", footer)
+        time.sleep(5)
+        self.driver.execute_script("window.scrollBy(0, 7000);")
+        time.sleep(3)
+        favorites_elem = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
+        assert amount_cards == len(favorites_elem), f"Кол-во добавленных элементов {amount_cards} отличается от кол-ва в избранном{len(favorites_elem)}"
+
+
+
+    def favorites(self):#Клик на кнопку избранное в хедере и переход на страницу избранное
+        self.click_element(MainPageLocators.FAVORITES)
+        favorites_elem = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
+
+
+    def delete_from_favorites(self):#Удалить из избранного, на странице избранное
+        list_cards = self.elements_are_visibile(MainPageLocators.DELETE_FROM_FAVORITES)
+        sum_cards = len(list_cards)
+        self.click_element(list_cards[randint(0, sum_cards)])
+        self.driver.refresh()
+        new_list_cards = self.elements_are_visibile(MainPageLocators.DELETE_FROM_FAVORITES)
+        assert len(new_list_cards) == len(list_cards) - 1, f"Количество карточек в избранном не уменьшилось на 1"
+
+    def delete_from_favorites_on_card(self):#Удалить товар из избранного на странице товара
+
+        catalog_elem = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
+        sum_elem = len(catalog_elem)
+        self.click_element(catalog_elem[randint(0, len(catalog_elem) - 1)])
+        self.click_element_without_scroll(MainPageLocators.ACTIVE_BUTTON_ADD_FAVORITES)
+        self.click_element(MainPageLocators.FAVORITES)
+        updated_catalog_elem = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
+        assert sum_elem - 1 == len(updated_catalog_elem),f"Первоначальное кол-во карточек в избранном {sum_elem}, отличается от кол-ва после удаления {len(updated_catalog_elem)}"
+
+
+
+
+
+
+
+
 
 
 """Авторизация"""
@@ -96,11 +172,32 @@ class Authorization(MainPage):
         text_error_password_recovery = self.element_is_visibile(MainPageLocators.TEXT_ERROR_PASSWORD_RECOVERY)
         return text_error_password_recovery.text
 
+    def burger_click(self):
+        self.click_element(MainPageLocators.BUTTON_BURGER)
+    def burger_menu(self):#Клик бургер меню->одежда->показать всё
+        self.click_element(MainPageLocators.BUTTON_BURGER)
+        self.click_element(MainPageLocators.BUTTON_CLOTHES)
+        self.click_element(MainPageLocators.BUTTON_LOOK_ALL)
+    """Каталог"""
+
+    def catalog(self):
+        cards_product = self.elements_any_are_visibile(MainPageLocators.CARD_PRODUCT)
+        self.click_element(cards_product[randint(0, 10)])
+        print(f"Кол-во видимых элементов:{len(cards_product)}")
 """Регистрация"""
 class Registration(MainPage):
 
     def click_go_to_registration(self):
         self.click_element(MainPageLocators.BUTTON_GO_TO_REGISTRATION)
+
+
+    def fill_registration_fields_with_param(self, first_name, last_name, email, date_of_birth, password):
+        self.input_text(MainPageLocators.FIRST_NAME_FIELD, first_name)
+        self.input_text(MainPageLocators.LAST_NAME_FIELD, last_name)
+        self.input_text(MainPageLocators.EMAIL_REGISTRATION_FIELD, email)
+        self.input_text(MainPageLocators.DATE_OF_BIRTH, date_of_birth)
+        self.input_text(MainPageLocators.PASSWORD_REGISTRATION_FIELD1, password)
+        self.input_text(MainPageLocators.PASSWORD_REGISTRATION_FIELD2, password)
 
     def fill_registration_fields(self, first_name, last_name, email, date_of_birth, password):
         self.input_text(MainPageLocators.FIRST_NAME_FIELD, first_name)
@@ -130,7 +227,7 @@ class SmokeTest(MainPage):
     """Бургер меню"""
     def burger_click(self):
         self.click_element(MainPageLocators.BUTTON_BURGER)
-    def burger_menu(self):
+    def burger_menu(self):#Клик бургер меню->одежда->показать всё
         self.click_element(MainPageLocators.BUTTON_BURGER)
         self.click_element(MainPageLocators.BUTTON_CLOTHES)
         self.click_element(MainPageLocators.BUTTON_LOOK_ALL)
@@ -138,7 +235,7 @@ class SmokeTest(MainPage):
 
     def catalog(self):
         cards_product = self.elements_any_are_visibile(MainPageLocators.CARD_PRODUCT)
-        self.click_element(cards_product[randint(0, 10)])
+        self.click_element(cards_product[randint(0, 9)])
         print(f"Кол-во видимых элементов:{len(cards_product)}")
 
 
@@ -154,7 +251,7 @@ class SmokeTest(MainPage):
         text_price_product = self.is_element_present(MainPageLocators.PRICE_PRODUCT)
         product_color = self.is_element_present(MainPageLocators.ACTIVE_COLOR)
         active_size = self.is_element_present(MainPageLocators.ACTIVE_SIZE)
-        return text_name_product.text, text_price_product.text, product_color.get_attribute("title"), active_size.text
+        return text_name_product.text.upper(), text_price_product.text, product_color.get_attribute("title"), active_size.text
 
     def button_add_basket(self):
         self.click_element_without_scroll(MainPageLocators.BUTTON_ADD_BASKET)
@@ -169,8 +266,59 @@ class SmokeTest(MainPage):
         return text_name_product_in_basket.text, text_price_product_in_basket.text,\
             text_color_product_in_basket.get_attribute("title"),text_size_product_in_basket.text.replace('Размер\n', '').upper()
 
+
     def button_checkout(self):
         self.click_element_without_scroll(MainPageLocators.BUTTON_CHECKOUT)
+
+    def delete_from_basket(self):
+        self.click_element(MainPageLocators.BUTTON_DELETE_PRODUCT_FROM_BASKET)
+
+    def text_empty_basket(self):
+        empty_basket = self.element_is_visibile(MainPageLocators.TEXT_EMPTY_BASKET)
+        return empty_basket.text
+
+    def add_few_products_to_basket(self):
+
+        count_products = []
+        for indx in range(5):
+            catalog_elem = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
+            self.click_element(catalog_elem[indx])
+            product_price = self.element_is_visibile(MainPageLocators.PRICE_PRODUCT).text
+            count_products.append(int(product_price.replace(" RUB", "")))
+            choose_size = self.elements_are_visibile(MainPageLocators.CHOOSE_SIZE)
+            self.click_element(choose_size[randrange(len(choose_size))])
+            self.click_element_without_scroll(MainPageLocators.BUTTON_ADD_BASKET)
+            self.driver.back()
+        print(count_products)
+        sum_price = sum(count_products)
+        return str(sum_price)
+    def add_few_products_to_basket2(self):
+
+        count_products = []
+        while len(count_products) != 5:
+            catalog_elem = self.element_are_present(MainPageLocators.CARD_PRODUCT)
+            indexes = list(range(len(catalog_elem)))
+            for i in indexes:
+                    self.click_element(catalog_elem[randint(0,i)])
+                    #used_indexes.append(i)
+                    product_price = self.element_is_visibile(MainPageLocators.PRICE_PRODUCT).text
+                    count_products.append(int(product_price.replace(" RUB", "")))
+                    choose_size = self.elements_are_visibile(MainPageLocators.CHOOSE_SIZE)
+                    self.click_element(choose_size[randrange(len(choose_size))])
+                    self.click_element_without_scroll(MainPageLocators.BUTTON_ADD_BASKET)
+                    self.driver.back()
+                    catalog_elem = self.elements_any_are_visibile(MainPageLocators.CARD_PRODUCT)
+                    if len(count_products) == 5:
+                        break
+        sum_price = sum(count_products)
+        return str(sum_price)
+
+
+
+    def basket_sum(self):
+        self.click_element(MainPageLocators.BUTTON_BASKET)
+        sum_basket = self.element_is_visibile(MainPageLocators.SUM_PRICE_BASKET)
+        return sum_basket.text.replace(" RUB", "")
 
     """"Оформление заказа """
     def name_price_color_size_text_checkout(self): #название, цена, цвет, размер продукта в оформлении заказа
@@ -184,6 +332,8 @@ class SmokeTest(MainPage):
         time.sleep(3)
         fill_country = self.input_text(MainPageLocators.COUNTRY, country)
         time.sleep(3)
+        self.click_element_without_scroll(MainPageLocators.COUNTRY)
+        time.sleep(5)
         fill_city = self.input_text(MainPageLocators.CITY, city)
         time.sleep(3)
         fill_index = self.input_text(MainPageLocators.INDEX, index)
@@ -226,6 +376,9 @@ class SmokeTest(MainPage):
     def total_ykassa(self):
         ykassa_total = self.element_is_visibile(MainPageLocators.TOTAL_SUM_Y_KASSA)
         return ykassa_total.get_attribute('aria-label')
+
+
+
 
 
 
