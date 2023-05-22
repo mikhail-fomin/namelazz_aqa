@@ -13,7 +13,7 @@ class TestAuthorization:
         page.log_in()
         page.fill_auth_fields_valid("admin@namelazz.com", "wSTaR9b5mcPuVZaJ")
         time.sleep(5)
-        page.log_in_when_auth()
+        page.log_in_whan_auth()
         greeting = page.check_greeting()
         assert greeting == "ПРИВЕТ, АННА!", f"Приветствие в ЛК {greeting} не совпадает с 'ПРИВЕТ, АННА!'"
 
