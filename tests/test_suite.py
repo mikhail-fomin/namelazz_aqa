@@ -49,7 +49,7 @@ class TestElements:
             assert total_sum == ykassa,f"Общая стоимость на Юкасса{ykassa} отличается от итого к оплате на странице инф." \
                                        f" о товаре {total_sum}"
 
-            time.sleep(10)
+
 
 
         # Смоук тест c авторизацией
@@ -92,7 +92,7 @@ class TestElements:
             assert total_sum == ykassa,f"Общая стоимость на Юкасса{ykassa} " \
                                        f"отличается от итого к оплате на странице инф. о товаре {total_sum}"
 
-            time.sleep(10)
+
 
     """Main Page"""
     class TestMainPage:
@@ -108,7 +108,7 @@ class TestElements:
             subscription = page.text_subscription()
             assert subscription == 'СПАСИБО ЗА ПОДПИСКУ! ПОДТВЕРЖДЕНИЕ ОТПРАВЛЕНО ВАМ НА ПОЧТУ.',\
                 f"Текст {subscription} не совпадает с 'СПАСИБО ЗА ПОДПИСКУ! ПОДТВЕРЖДЕНИЕ ОТПРАВЛЕНО ВАМ НА ПОЧТУ'"
-            time.sleep(5)
+
 
 
         # выбор города
@@ -153,7 +153,7 @@ class TestElements:
             text_empty_basket = page.text_empty_basket().upper()
             assert text_empty_basket == "ВАША КОРЗИНА ПУСТА", f"Корзина не пуста, текст {text_empty_basket}" \
                                                               f" не соответствует 'Ваша корзина пуста'"
-            time.sleep(3)
+
 
 
 
@@ -168,7 +168,6 @@ class TestElements:
             sum_price_poducts = page.add_few_products_to_basket2()
             time.sleep(3)
             sum_price_basket = page.basket_sum()
-            time.sleep(10)
             assert sum_price_poducts == sum_price_basket,f"Сумма добавленных товаров {sum_price_poducts} " \
                                                          f"не равна сумме в корзине {sum_price_basket}"
 
@@ -187,7 +186,7 @@ class TestElements:
             page.catalog_add_favourites()
             time.sleep(3)
             page.favorites()
-            time.sleep(4)
+
 
 
         # удаление из избранного, на странице избранное
@@ -205,7 +204,7 @@ class TestElements:
             time.sleep(3)
             page.favorites()
             page.delete_from_favorites()
-            time.sleep(3)
+
 
 
         # удаление из избранного, на странице карточки товара.
@@ -223,7 +222,7 @@ class TestElements:
             time.sleep(3)
             page.favorites()
             page.delete_from_favorites_on_card()
-            time.sleep(3)
+
 
         # добавленеие в избранное 20 карточек и проверка, что при скролле карточки не удваиваются
         def test_scroll_favorites(self, driver):
@@ -237,7 +236,7 @@ class TestElements:
             time.sleep(5)
             page.burger_menu()
             page.catalog_add_favourites_20_products()
-            time.sleep(3)
+
 
         # добавленеие в избранное и переход на страницу избранное через сайдбар, проверка соответствия добавленных карточке и в избранном
         def test_favorites_sidebar(self, driver):
@@ -255,7 +254,7 @@ class TestElements:
             assert products_sum_in_catalog == products_sum_in_favorite, f"Кол-во добавленных карточек {products_sum_in_catalog}" \
                                                                         f"не равно кол-во в избранном {products_sum_in_favorite}"
 
-            time.sleep(4)
+
 
 
 

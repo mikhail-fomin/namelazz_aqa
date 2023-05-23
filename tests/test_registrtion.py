@@ -22,7 +22,7 @@ class TestRegistration:
                                           generator.date_of_birth, "Test1Test1")
             page.chekbox_sig_in_loyal("+79998885544")
             page.button_create_account()
-            time.sleep(5)
+
 
 
 
@@ -42,7 +42,7 @@ class TestRegistration:
             time.sleep(5)
             text_reg_successful = page.text_successful_reg()
             print(text_reg_successful)
-            time.sleep(5)
+
 
         # Регистрация с вводом зарегестрированного email
         def test_registrtion_witout_loyal_no_valid(self, driver):
@@ -61,4 +61,3 @@ class TestRegistration:
             text_error_mail = page.text_error_mail()
             assert text_error_mail == 'Пользователь с такой почтой уже существует',\
                 f"Текст ошибки {text_error_mail} не свопадает с 'Пользователь с такой почтой уже существует'"
-            time.sleep(5)
