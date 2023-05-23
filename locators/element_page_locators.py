@@ -8,12 +8,13 @@ class MainPageLocators:
         BUTTON_YES_CITY = (By.XPATH,'/html/body/header/div/div[3]/div/div/div[1]/div[2]/div[2]/a[1]')#Подтвердить город
         CLOSE_MODAL_COOKIE = (By.CSS_SELECTOR,'[class="n-cookie-modal__close"]')#закрытие модального окна куки
         CATALOG_ELEMENTS = (By.CSS_SELECTOR,'[class="burger__wrapper"]>ul[class="burger__menu"]>li[class="burger__menu-item"]>[class="burger__menu-link"]')#Список категорий в сайдбаре
+        FAVORITES_SIDEBAR = (By.CSS_SELECTOR, '[class="burger__menu  burger__menu_last"]>li:nth-child(1)>a')# кнопка избранное в сайдбаре
 
         BUTTON_LOG_IN = (By.CSS_SELECTOR,'button[class="header__icons-item  header__icons-auth  auth_open"]')#не авторизован
         BUTTON_LOG_IN_WHEN_AUTH_USER = (By.CSS_SELECTOR,'[class="header__icons-item  header__icons-auth"]')#авторизован
         BUTTON_BURGER = (By.CSS_SELECTOR, "[class='header__btn  menu-btn-open']")#кнопка бургер меню
         BUTTON_BASKET = (By.CSS_SELECTOR,'[id="ajaxCart2"]>svg')#кнопка корзина
-        BUTTON_CLOTHES = (By.CSS_SELECTOR, 'div.burger__wrapper > ul.burger__menu:nth-of-type(1) > li:nth-of-type(5)>[class="burger__menu-link  submenu-open"]')#Одежда и аксесуары
+        BUTTON_CLOTHES = (By.CSS_SELECTOR, 'div.burger__wrapper > ul.burger__menu:nth-of-type(1) > li:nth-of-type(6)>[class="burger__menu-link  submenu-open"]')#Одежда и аксесуары
         BUTTON_LOOK_ALL = (By.CSS_SELECTOR, 'div.burger__submenu:nth-of-type(1)>ul.burger__menu:nth-of-type(1)>li:nth-of-type(2)>[class="burger__menu-link"]:nth-of-type(1)')#Смотреть всё
         SUBSCRIPTION = (By.ID,"sbscr")#поле подписаться на новости
         TEXT_SUBSCRIPTION = (By.CSS_SELECTOR,'[class="container-fluid"]>h1')#текст успешной подписки на новости
@@ -87,8 +88,8 @@ class MainPageLocators:
         COLOR_PRODUCT_CHECHOUT = (By.XPATH,'//div[contains (@class, "cart_option")]/div/div[contains(@title,"")]')#получаем текст цвет продукта на странице оформления заказа
         SIZE_PRODUCT_CHECHOUT = (By.CSS_SELECTOR,'[class="cart_option"]:nth-of-type(2)')#получаем текст размер продукта на странице оформления заказа
 
-        #Filling date
-        #Данные адреса
+
+        # Поля для заполнения данных адреса
         COUNTRY = (By.ID,"country")
         CITY = (By.ID,"city")
         INDEX = (By.ID,"postal_code")
@@ -96,18 +97,18 @@ class MainPageLocators:
         HOUSE = (By.ID,"building")
         APARTMENT = (By.ID,"room")
 
-        #Данные получателя
+        # Поля для заполнения данных пользователя
         NAME_ORDER = (By.ID,"receiver")
         FIRST_NAME_ORDER = (By.ID,"surname")
         EMAIL_ORDER = (By.ID,"email_order")
         NUMBER_ORDER = (By.ID,"phone_order")
         COMMENT_ORDER = (By.ID,"comment")
 
-        #Радиобаттон доставка
+        # Радиобаттон доставка
         RADIOBUTTON_ORDER = (By.CSS_SELECTOR,'[id="cdekCoruier"]>[class="delivery input-parent courier"]>[class="radio"]')
         RADIOBUTTON_DELIVERY_COST = (By.CSS_SELECTOR,'[id="cdekCoruier"]>[class="delivery input-parent courier"]>[class="delivery-details"]>[class="delivery_cost"]')
 
-        #Информация о заказе
+        # Информация о заказе
         COST_OF_GOODS = (By.CSS_SELECTOR,'[class="real_total_cost"]')#стоимость товара
         DISCOUNT = (By.CSS_SELECTOR,'[class="ms2_promocode_discount"]')#стоимость доставки
         DELIVERY = (By.CSS_SELECTOR, '[class="ms2_delivery_cost"]') #стоимость с RUB
@@ -115,5 +116,5 @@ class MainPageLocators:
         TOTAL_SUM = (By.CSS_SELECTOR, '[id="ms2_order_cost"]')#итого к оплате
         BUTTON_ORDER_SUBMIT = (By.ID,"order_submit")#кнопка сделать заказ
 
-        #Страница платёжной системы
+        # Страница платёжной системы
         TOTAL_SUM_Y_KASSA = (By.CSS_SELECTOR,'[class="Text__StyledTextSpan-sc-9bqqn7-0 bKjqYI Price__StyledText-sc-ymfuk6-0 jiVPLn"]>span')#стоимость товара на странице юкассы

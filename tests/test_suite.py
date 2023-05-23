@@ -172,6 +172,7 @@ class TestElements:
             assert sum_price_poducts == sum_price_basket,f"Сумма добавленных товаров {sum_price_poducts} " \
                                                          f"не равна сумме в корзине {sum_price_basket}"
 
+        """Избранное"""
         # добавление одного товара в избранное и проверка, что кол-во в избранном соответствует кол-ву добавленных товаров в избранное
         def test_add_favorites(self, driver):
             page = Authorization(driver, "https://namelazz.com/")
@@ -237,6 +238,24 @@ class TestElements:
             page.burger_menu()
             page.catalog_add_favourites_20_products()
             time.sleep(3)
+
+        # добавленеие в избранное и переход на страницу избранное через сайдбар, проверка соответствия добавленных карточке и в избранном
+        def test_favorites_sidebar(self, driver):
+            page = Authorization(driver, "https://namelazz.com/")
+            page.open()
+            page.button_yes_choose_city()
+            time.sleep(5)
+            page.close_modal_cookie()
+            page.log_in()
+            page.fill_auth_fields_valid("admin@namelazz.com", "wSTaR9b5mcPuVZaJ")
+            time.sleep(5)
+            page.burger_menu()
+            products_sum_in_catalog = page.catalog_add_favourites()
+            products_sum_in_favorite = page.choose_favorite_in_sidebar()
+            assert products_sum_in_catalog == products_sum_in_favorite, f"Кол-во добавленных карточек {products_sum_in_catalog}" \
+                                                                        f"не равно кол-во в избранном {products_sum_in_favorite}"
+
+            time.sleep(4)
 
 
 

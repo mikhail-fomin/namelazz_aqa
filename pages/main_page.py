@@ -69,14 +69,16 @@ class MainPage(BasePage):
 
     # Добавление в избранное нескольких товаров
     def catalog_add_favourites(self):
+        count_product = 0
         for indx in range(3):
             catalog_elem = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
             self.click_element(catalog_elem[indx])
             time.sleep(3)
             self.click_element_without_scroll(MainPageLocators.ADD_FAVORITES)
+            count_product = count_product + 1
             time.sleep(3)
             self.driver.back()
-
+        return count_product
     # Добавление в избранное 20 товаров
     def catalog_add_favourites_20_products(self):
 
@@ -188,12 +190,18 @@ class Authorization(MainPage):
     def burger_click(self):
         self.click_element(MainPageLocators.BUTTON_BURGER)
 
-    # Клик бургер меню->одежда->показать всё
+    # клик бургер меню->одежда->показать всё
     def burger_menu(self):
         self.click_element(MainPageLocators.BUTTON_BURGER)
         self.click_element(MainPageLocators.BUTTON_CLOTHES)
         self.click_element(MainPageLocators.BUTTON_LOOK_ALL)
 
+    # выбор избранное в сайдбаре
+    def choose_favorite_in_sidebar(self):
+        self.click_element(MainPageLocators.BUTTON_BURGER)
+        self.click_element(MainPageLocators.FAVORITES_SIDEBAR)
+        favorites_elem = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
+        return len(favorites_elem)
 
     """Каталог"""
 
