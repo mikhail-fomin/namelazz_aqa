@@ -1,6 +1,6 @@
 from pages.main_page import MainPage,Authorization, Registration, SmokeTest
 import time
-
+from data.generator import Generator
 
 """Авторизация"""
 class TestAuthorization:
@@ -21,11 +21,12 @@ class TestAuthorization:
     # ввод не валидного email
     def test_auth_no_valid_email(self, driver):
         page = Authorization(driver, "https://namelazz.com/")
+        generator = Generator
         page.open()
         time.sleep(3)
         page.close_modal_window()
         page.log_in()
-        page.fill_auth_fields_valid("notvalid@namelazz.com", "wSTaR9b5mcPuVZaJ")
+        page.fill_auth_fields_valid(generator.password,"wSTaR9b5mcPuVZaJ")
         time.sleep(5)
         text_error = page.text_error_auth()
         assert text_error == "Пожалуйста, введите правильные E-mail и пароль. Оба поля могут быть чувствительны к регистру.", \
@@ -35,11 +36,12 @@ class TestAuthorization:
     # ввод не валидного пароля
     def test_auth_no_valid_password(self, driver):
         page = Authorization(driver, "https://namelazz.com/")
+        generator = Generator
         page.open()
         time.sleep(3)
         page.close_modal_window()
         page.log_in()
-        page.fill_auth_fields_valid("admin@namelazz.com", "7885ewfwefew455855")
+        page.fill_auth_fields_valid("admin@namelazz.com", generator.password)
         time.sleep(5)
         text_error = page.text_error_auth()
         assert text_error == "Пожалуйста, введите правильные E-mail и пароль. Оба поля могут быть чувствительны к регистру.", \
