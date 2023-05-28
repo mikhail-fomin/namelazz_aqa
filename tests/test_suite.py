@@ -1,5 +1,7 @@
 import time
 import string
+
+import allure
 import pytest
 
 from pages.main_page import MainPage,Authorization, Registration, SmokeTest
@@ -7,12 +9,15 @@ from pages.base_page import BasePage
 from selenium.webdriver.common.keys import Keys
 from data import data
 from random import randint, randrange
+@allure.suite("Elements")
 class TestElements:
 
     """Smoke test"""
+    @allure.feature("TestSmoke")
     class TestSmoke:
 
         # Смоук тест без авторизации
+        @allure.title("Check TestSmoke")
         def test_smoke_test_without_auth(self,driver):
             page = SmokeTest(driver, "https://namelazz.com/")
             page.open()
