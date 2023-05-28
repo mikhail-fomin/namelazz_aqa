@@ -110,7 +110,6 @@ class TestElements:
                 f"Текст {subscription} не совпадает с 'СПАСИБО ЗА ПОДПИСКУ! ПОДТВЕРЖДЕНИЕ ОТПРАВЛЕНО ВАМ НА ПОЧТУ'"
 
 
-
         # выбор города
         def test_choose_city(self,driver):
             page = MainPage(driver, "https://namelazz.com/")
@@ -124,7 +123,10 @@ class TestElements:
             assert city == header_city, f"Выбранный город {city} отличсется от города в хедере {header_city}"
 
 
-        # переключение между каталогами
+
+
+        """Burger menu"""
+        # переключение между каталогами в бургере
         def test_catalog_choose_and_back(self, driver):
             page = SmokeTest(driver, "https://namelazz.com/")
             page.open()
@@ -135,6 +137,69 @@ class TestElements:
             page.catalog_click_back()
 
 
+
+
+        """Catalog"""
+        # переключение между категориями одежды и проверка что название в списке соответствует названию при переходе в каталог
+        def test_switching_categories(self,driver):
+            page = SmokeTest(driver, "https://namelazz.com/")
+            page.open()
+            page.button_yes_choose_city()
+            time.sleep(5)
+            page.close_modal_cookie()
+            page.burger_menu_swithing_categories()
+
+
+        # сортировка по убыванию
+        def test_sorting_descending(self, driver):
+            page = SmokeTest(driver, "https://namelazz.com/")
+            page.open()
+            page.button_yes_choose_city()
+            time.sleep(5)
+            page.close_modal_cookie()
+            page.burger_menu()
+            prices = page.sorting_descending()
+            for i in range(len(prices) - 1):
+                assert int(prices[i]) >= int(prices[i + 1]), f"Список не отсортирован по убыванию {prices}"
+
+
+        # сортировка по возрастанию
+        def test_sorting_ascending(self, driver):
+            page = SmokeTest(driver, "https://namelazz.com/")
+            page.open()
+            page.button_yes_choose_city()
+            time.sleep(5)
+            page.close_modal_cookie()
+            page.burger_menu()
+            prices = page.sorting_ascending()
+            for i in range(len(prices) - 1):
+                assert int(prices[i]) <= int(prices[i + 1]), f"Список не отсортирован по возрастанию {prices}"
+
+        # фильтрация по цене
+        def test_filter_price(self,driver):
+            page = SmokeTest(driver, "https://namelazz.com/")
+            page.open()
+            page.button_yes_choose_city()
+            time.sleep(5)
+            page.close_modal_cookie()
+            page.burger_menu()
+            page.filter_price()
+
+        # фильтрация по размеру
+        def test_filter_size(self,driver):
+            page = SmokeTest(driver, "https://namelazz.com/")
+            page.open()
+            page.button_yes_choose_city()
+            time.sleep(5)
+            page.close_modal_cookie()
+            page.burger_menu()
+            page.filter_size()
+
+
+
+
+
+        """Basket"""
         # Добавление и удаление из корзины
         def test_smoke_test_without_auth(self,driver):
             page = SmokeTest(driver, "https://namelazz.com/")
@@ -155,8 +220,6 @@ class TestElements:
                                                               f" не соответствует 'Ваша корзина пуста'"
 
 
-
-
         # добавление в корзину нескольких товаров и проверка общей суммы
         def test_add_few_products_to_basket(self, driver):
             page = SmokeTest(driver, "https://namelazz.com/")
@@ -170,6 +233,9 @@ class TestElements:
             sum_price_basket = page.basket_sum()
             assert sum_price_poducts == sum_price_basket,f"Сумма добавленных товаров {sum_price_poducts} " \
                                                          f"не равна сумме в корзине {sum_price_basket}"
+
+
+
 
         """Избранное"""
         # добавление одного товара в избранное и проверка, что кол-во в избранном соответствует кол-ву добавленных товаров в избранное
@@ -188,7 +254,6 @@ class TestElements:
             page.favorites()
 
 
-
         # удаление из избранного, на странице избранное
         def test_delete_from_favorites(self,driver):
             page = Authorization(driver, "https://namelazz.com/")
@@ -204,7 +269,6 @@ class TestElements:
             time.sleep(3)
             page.favorites()
             page.delete_from_favorites()
-
 
 
         # удаление из избранного, на странице карточки товара.

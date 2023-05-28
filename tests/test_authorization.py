@@ -11,11 +11,11 @@ class TestAuthorization:
         time.sleep(3)
         page.close_modal_window()
         page.log_in()
-        page.fill_auth_fields_valid("admin@namelazz.com", "wSTaR9b5mcPuVZaJ")
+        page.fill_auth_fields_valid("jobac10971@goflipa.com", "Test1Test1")
         time.sleep(5)
         page.log_in_whan_auth()
         greeting = page.check_greeting()
-        assert greeting == "ПРИВЕТ, АННА!", f"Приветствие в ЛК {greeting} не совпадает с 'ПРИВЕТ, АННА!'"
+        assert greeting == "ПРИВЕТ, ТЕСТ!", f"Приветствие в ЛК {greeting} не совпадает с 'ПРИВЕТ, ТЕСТ!'"
 
 
     # ввод не валидного email
@@ -26,7 +26,7 @@ class TestAuthorization:
         time.sleep(3)
         page.close_modal_window()
         page.log_in()
-        page.fill_auth_fields_valid(generator.password,"wSTaR9b5mcPuVZaJ")
+        page.fill_auth_fields_valid(generator.email,"Test1Test1")
         time.sleep(5)
         text_error = page.text_error_auth()
         assert text_error == "Пожалуйста, введите правильные E-mail и пароль. Оба поля могут быть чувствительны к регистру.", \
@@ -41,7 +41,7 @@ class TestAuthorization:
         time.sleep(3)
         page.close_modal_window()
         page.log_in()
-        page.fill_auth_fields_valid("admin@namelazz.com", generator.password)
+        page.fill_auth_fields_valid("jobac10971@goflipa.com", generator.password)
         time.sleep(5)
         text_error = page.text_error_auth()
         assert text_error == "Пожалуйста, введите правильные E-mail и пароль. Оба поля могут быть чувствительны к регистру.", \

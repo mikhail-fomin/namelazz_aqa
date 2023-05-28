@@ -1,7 +1,11 @@
 import random
 import time
 from random import randint, randrange,random
+import re
+from re import compile
+
 import pytest
+from selenium.common import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
@@ -273,6 +277,30 @@ class SmokeTest(MainPage):
         self.click_element(MainPageLocators.BUTTON_CLOTHES)
         self.click_element(MainPageLocators.BUTTON_LOOK_ALL)
 
+
+    # Получаем список категорий в сайдбаре и сравниваем на соответствие с страницей категории
+    def burger_menu_swithing_categories(self):
+        self.click_element(MainPageLocators.BUTTON_BURGER)
+        self.click_element(MainPageLocators.BUTTON_CLOTHES)
+        self.click_element(MainPageLocators.LIST_CATEGORIES_LOOK_ALL)
+        list_categories = []
+        list_categories_page = []
+        for indx in range(1, 14):
+            try:
+                catalog_elem = self.elements_are_visibile(MainPageLocators.LIST_CATEGORIES_PRODUCTS)
+                name_catalog_elem = self.elements_are_visibile(MainPageLocators.NAME_CATEGORY_SIDEBAR)
+                list_categories.append(name_catalog_elem[indx].text)
+                self.click_element(catalog_elem[indx])
+
+                category = self.element_is_visibile(MainPageLocators.NAME_PAGE_CATEGORIY)
+                list_categories_page.append(category.text)
+
+            except AttributeError: pass
+        assert list_categories == list_categories_page, f"Список категорий в сайдбаре {list_categories} не равен списку " \
+                                                        f"категорий на каждой странице {list_categories_page}"
+
+
+
     """Каталог"""
     # находим список продуктов и кликаем по случайной карточке
     def catalog(self):
@@ -282,7 +310,92 @@ class SmokeTest(MainPage):
 
 
 
-    """Страница продукта"""
+
+    # сортировка по убыванию и получание списка отсортированного товара
+    def sorting_descending(self):
+        self.click_element(MainPageLocators.BUTTON_SOTRING)
+        self.click_element(MainPageLocators.SORTING_DESCENDING)
+        time.sleep(8)
+        products = self.element_are_present(MainPageLocators.PRICE_OLD_AND_NEW)
+        prices = []
+        for i in range(len(products)):
+                price_text = products[i].text.replace(' RUB', '')
+
+                if '\n' in price_text:
+                    price_parts = re.sub('\n\\d+', '', price_text)
+                    prices.append(price_parts)
+                else: prices.append(price_text)
+        return prices
+
+    # сортировка по возрастанию и получание списка отсортированного товара
+    def sorting_ascending(self):
+        self.click_element(MainPageLocators.BUTTON_SOTRING)
+        self.click_element(MainPageLocators.SORTING_ASCENDING)
+        time.sleep(5)
+        products = self.element_are_present(MainPageLocators.PRICE_OLD_AND_NEW)
+        prices = []
+        for i in range(len(products)):
+                price_text = products[i].text.replace(' RUB', '')
+
+                if '\n' in price_text:
+                    price_parts = re.sub('\n\\d+', '', price_text)
+                    prices.append(price_parts)
+                else: prices.append(price_text)
+        return prices
+
+
+    # фильтр по цене
+    def filter_price(self):
+        self.click_element(MainPageLocators.BUTTON_SOTRING)
+        self.click_element(MainPageLocators.SORTING_ASCENDING)
+        time.sleep(5)
+        self.click_element(MainPageLocators.FILTER_PRICE)
+        price_random = randint(5000, 30000)
+        element = self.input_text_keys_enter_time_sleep_4(MainPageLocators.FILTER_PRICE_MIN_COST, price_random)
+        time.sleep(5)
+        products = self.element_are_present(MainPageLocators.PRICE_OLD_AND_NEW)
+        prices = []
+        for i in range(len(products)):
+                price_text = products[i].text.replace(' RUB', '')
+                if '\n' in price_text:
+                    price_parts = re.sub('\n\\d+', '', price_text)
+                    prices.append(price_parts)
+                else: prices.append(price_text)
+
+        for price in list(map(int, prices)):
+            assert price_random <= price, f" Список не отсортирован по цене {price} "
+
+    def filter_size(self):
+        self.click_element(MainPageLocators.FILTER_SIZE)
+        checkbox = self.elements_are_visibile(MainPageLocators.CHECKBOX_FILTER_SIZE)
+        random_size = randint(0, len(checkbox))
+        time.sleep(5)
+        self.click_element(checkbox[random_size])
+        size = []
+        size.append(checkbox[random_size].text)
+        print(size)
+        time.sleep(10)
+
+        for i in range(0, 4):
+                products = self.elements_are_visibile(MainPageLocators.CARD_PRODUCT)
+                time.sleep(3)
+                self.click_element(products[i])
+                size_product = self.elements_are_visibile(MainPageLocators.CHOOSE_SIZE)
+                list_size_product = []
+                for i in range(len(size_product)):
+                    list_size_product.append(size_product[i].text)
+                    assert size[0] in list_size_product, f"Значение {size} нет среди размеров {list_size_product} товара "
+
+                self.driver.back()
+                self.click_element(MainPageLocators.FILTER_SIZE)
+                checkbox = self.elements_are_visibile(MainPageLocators.CHECKBOX_FILTER_SIZE)
+                time.sleep(3)
+                self.click_element(checkbox[random_size])
+                time.sleep(5)
+
+
+
+    """Страница товара"""
 
     # получаем список доступных размеров для товара и кликаем по случайному размеру
     def choose_size(self):
